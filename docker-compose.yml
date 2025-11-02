@@ -1,0 +1,58 @@
+networks:
+  app-network:
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      target: runner
+    restart: always
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    command: ["node", "server.js"]
+
+  # prisma-studio:
+  #   image: node:lts-alpine3.17
+  #   working_dir: /usr/src/app
+  #   volumes:
+  #     - .:/usr/src/app
+  #   command: npx prisma studio --port 5555 --browser none
+  #   ports:
+  #     - "5555:5555"
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+volumes:
+  postgres_data:
