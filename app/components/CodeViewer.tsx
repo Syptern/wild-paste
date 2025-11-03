@@ -15,11 +15,8 @@ const languageMap: Record<string, any> = {
 };
 
 interface CodeViewerProps {
-  /** The code or text content to display */
   text: string;
-  /** Language name — must match one of the keys in languageMap */
   language?: keyof typeof languageMap;
-  /** Editor height (default: 300px) */
   height?: string;
 }
 
@@ -30,7 +27,7 @@ export default function CodeViewer({
   const extension = languageMap[language] ? [languageMap[language]()] : [];
 
   return (
-    <div className="border rounded-md overflow-hidden bg-slate-50">
+    <div className="border rounded-md overflow-hidden bg-slate-50 w-full">
       <div className="px-3 py-2 text-sm font-medium bg-slate-100 border-b text-slate-700">
         {language}
       </div>
@@ -39,6 +36,7 @@ export default function CodeViewer({
         extensions={extension}
         editable={false}
         readOnly={true}
+        height="250px"
         basicSetup={{
           lineNumbers: true,
           highlightActiveLine: false,

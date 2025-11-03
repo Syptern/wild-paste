@@ -40,7 +40,7 @@ export default function LiveCodeEditor({ onChange }: LiveCodeEditorProps) {
   return (
     <div className="space-y-2">
       <Select value={language} onValueChange={setLanguage}>
-        <SelectTrigger className="w-40 bg-slate-50">
+        <SelectTrigger className="w-40 bg-white">
           <SelectValue placeholder="Select language" />
         </SelectTrigger>
         <SelectContent>

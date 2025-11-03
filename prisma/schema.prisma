@@ -15,11 +15,15 @@ datasource db {
 }
 
 model Paste {
-  id        String    @id @default(uuid()) @db.Uuid
-  title     String?
-  content   String
-  private   Boolean   @default(false)           
-  expiresAt DateTime?                           
-  password  String?                              
-  createdAt DateTime @default(now())
+  id                String    @id @default(uuid()) @db.Uuid
+  title             String?
+  content           String
+  expiresAt         DateTime?                           
+  password          String?                              
+  createdAt         DateTime @default(now())
+  language          String?
+  readOnce          Boolean @default(false)
+  deactivated       Boolean @default(false)
+  deactivatedReason String?
 }
+

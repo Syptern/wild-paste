@@ -1,4 +1,8 @@
+import { PasteResponse } from "@/app/api/paste/route";
 import CodeViewer from "@/app/components/CodeViewer";
+import { DeactivatedText } from "@/app/components/DeactivatedText";
+import PasswordForm from "@/app/components/PasswordForm";
+
 import { notFound } from "next/navigation";
 
 export default async function PastePage({
@@ -11,12 +15,22 @@ export default async function PastePage({
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/paste/${id}`
   );
   if (!res.ok) return notFound();
-  const paste = await res.json();
+  const paste: PasteResponse = await res.json();
+  console.log(paste)
+
+  let content;
+  if (paste.passwordRequired) {
+    content = <PasswordForm pasteId={id} />;
+  } else if (paste.deactivated) {
+    content = <DeactivatedText reason={paste.deactivatedReason} />;
+  } else {
+    content = <CodeViewer text={paste.content} language={paste.language || undefined} />;
+  }
 
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans">
-      <main className="flex flex-col min-h-screen max-w-4xl w-full my-20">
-        <CodeViewer text={paste.content} language="Python" height="250px" />{" "}
+    <div className="flex items-center justify-center font-sans">
+      <main className="flex flex-col  max-w-4xl w-full">
+        {content}
       </main>
     </div>
   );
