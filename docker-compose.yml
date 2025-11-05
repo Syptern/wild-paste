@@ -25,6 +25,7 @@ services:
   frontend:
     env_file: ".env"
     pull_policy: never
+    restart: unless-stopped
     container_name: frontend
     build:
       context: .
