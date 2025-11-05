@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <div className="px-4 flex-1">{children}</div>
         <footer>
-          <div className="flex flex-col my-12 justify-center items-center text-stone-500">
+          <div className="flex flex-col my-12 justify-center items-center text-stone-500 p-6">
             <div className="w-xs border-b my-8" />
 
             <p className="max-w-xl text-center">
