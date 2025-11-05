@@ -22,13 +22,15 @@ services:
       retries: 20
 
   frontend:
+    env_file: ".env.production"
     container_name: frontend
     build:
       context: .
       target: runner
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+        NODE_ENV: ${NODE_ENV}
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
     ports:
       - "3000:3000"
     depends_on:

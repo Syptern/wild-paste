@@ -24,13 +24,17 @@ const languageMap: Record<string, any> = {
 };
 
 interface LiveCodeEditorProps {
-  onChange?: (value: { code: string; language: string, title: string | null }) => void;
+  onChange?: (value: {
+    code: string;
+    language: string;
+    title: string | null;
+  }) => void;
 }
 
 export default function LiveCodeEditor({ onChange }: LiveCodeEditorProps) {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("Plain Text");
-  const [title, setTitle] = useState<string | null>(null)
+  const [title, setTitle] = useState<string | null>(null);
 
   const extension = languageMap[language] ? [languageMap[language]()] : [];
 
@@ -56,10 +60,12 @@ export default function LiveCodeEditor({ onChange }: LiveCodeEditorProps) {
 
       {/* CodeMirror Editor */}
       <div className="border rounded-md overflow-hidden">
-        <Input type="text" 
-        placeholder="Enter a title..." 
-        className="h-8 font-semibold pl-8 placeholder:font-normal placeholder:text-stone-400 border-b-0 ring-b-0 outline-b-0 rounded-b-none" 
-        onChange={e => setTitle(e.target.value || null)}
+        <Input
+          type="text"
+          name="title"
+          placeholder="Enter a title..."
+          className="h-8 py-6  text-lg font-semibold pl-9 placeholder:font-normal placeholder:text-stone-400  border-l-0 border-t-0 border-r-0  ring-b-0 outline-b-0 rounded-b-none"
+          onChange={(e) => setTitle(e.target.value || null)}
         />
         <CodeMirror
           placeholder="Start writing or pasting..."

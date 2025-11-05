@@ -17,7 +17,7 @@ const languageMap: Record<string, any> = {
 
 interface CodeViewerProps {
   text: string;
-  title: string | null
+  title: string | null;
   language?: keyof typeof languageMap;
   height?: string;
 }
@@ -29,29 +29,30 @@ export default function CodeViewer({
 }: CodeViewerProps) {
   const extension = languageMap[language] ? [languageMap[language]()] : [];
 
-  return (<>
-    <Badge className="bg-slate-100 text-slate-700 shadow-xs text-black my-4 p-2 px-3">
+  return (
+    <div className="flex flex-col w-full">
+      <Badge className="bg-slate-100 border border-stone-300 shadow-xs text-black my-4 p-2 px-3">
         {language}
       </Badge>
-    <div className="border rounded-md overflow-hidden bg-slate-50 w-full">
-      
-      <div className="pl-9 px-3 py-2 text-sm font-medium bg-slate-100 border-b text-slate-700">
-        {title}
+      <div className="border rounded-md overflow-hidden w-full">
+        {title && (
+          <div className="flex items-center h-8 py-6 text-md font-semibold pl-9 placeholder:font-normal placeholder:text-stone-400  border-b ring-b-0 outline-b-0 rounded-b-none">
+            {title}
+          </div>
+        )}
+        <CodeMirror
+          value={text}
+          extensions={extension}
+          editable={false}
+          readOnly={true}
+          height="250px"
+          basicSetup={{
+            lineNumbers: true,
+            highlightActiveLine: false,
+            highlightActiveLineGutter: false,
+          }}
+        />
       </div>
-      <CodeMirror
-        value={text}
-        extensions={extension}
-        editable={false}
-        readOnly={true}
-        height="250px"
-        basicSetup={{
-          lineNumbers: true,
-          highlightActiveLine: false,
-          highlightActiveLineGutter: false,
-        }}
-      />
-      
     </div>
-    </>
   );
 }
