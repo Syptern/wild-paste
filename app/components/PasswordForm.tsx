@@ -4,7 +4,6 @@ import { useState } from "react";
 import CodeViewer from "./CodeViewer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Paste } from "../generated/prisma/client";
 import { PasteInformation } from "./PasteInformation";
 import { PasteResponse } from "../api/paste/route";
 
@@ -41,25 +40,33 @@ export default function PasswordForm({ pasteId }: PasswordFormProps) {
   };
 
   if (paste) {
-    return <><CodeViewer title={paste.title} text={paste.content} language={paste.language || undefined} height="250px" /><PasteInformation paste={paste}/></>;
+    return (
+      <>
+        <CodeViewer
+          title={paste.title}
+          text={paste.content}
+          language={paste.language || undefined}
+          height="250px"
+        />
+        <PasteInformation paste={paste} />
+      </>
+    );
   }
 
   return (
     <div className="flex flex-col items-center">
-        
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">
-      <Input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter password"
-      />
-      <Button type="submit" disabled={loading}>
-        {loading ? "Loading..." : "Submit"}
-      </Button>
-      {error && <p className="text-red-500">{error}</p>}
-    </form>
-        </div>
-
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm">
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password"
+        />
+        <Button type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Submit"}
+        </Button>
+        {error && <p className="text-red-500">{error}</p>}
+      </form>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CircleX, ClosedCaption, Lock } from "lucide-react";
+import { CircleX, Lock } from "lucide-react";
 import { useState } from "react";
 
 interface PasswordInputProps {

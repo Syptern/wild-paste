@@ -4,17 +4,14 @@ import { Button } from "@/components/ui/button";
 import LiveCodeEditor from "./LiveCodeEditor";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { ExpiryDatePicker } from "./ExpiryDatePicker";
 import { PasswordInput } from "./PasswordInput";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CreatePasteRequest, PasteResponse } from "../api/paste/route";
 import { Label } from "@/components/ui/label";
-import { Paste } from "../generated/prisma/client";
 import CodeViewer from "./CodeViewer";
 import CopyLink from "./CopyLink";
 import { PasteInformation } from "./PasteInformation";
-import { Input } from "@/components/ui/input";
 
 export default function PasteEditor() {
   const [content, setContent] = useState("");
@@ -64,7 +61,6 @@ export default function PasteEditor() {
     }
 
     if (!response.ok) {
-      // the backend sends { error: "..." }
       setError(json.error || "Unknown error occurred");
       setLoading(false);
       throw new Error(json.error || "Unknown error occurred");
@@ -75,7 +71,6 @@ export default function PasteEditor() {
 
   useEffect(() => {
     const onPopState = () => {
-      // If URL is /, reset the createdPaste state
       if (window.location.pathname === "/") {
         setCreatedPaste(null);
       }
