@@ -4,6 +4,7 @@ networks:
 services:
   db:
     image: postgres:16
+    pull_policy: never
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
