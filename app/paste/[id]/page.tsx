@@ -13,9 +13,11 @@ export default async function PastePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/paste/${id}`);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/paste/${id}`
   );
+  console.log(res);
   if (!res.ok) return notFound();
   const paste: PasteResponse = await res.json();
 
