@@ -23,7 +23,7 @@ services:
       retries: 20
 
   frontend:
-    env_file: ".env.production"
+    env_file: ".env"
     container_name: frontend
     build:
       context: .
@@ -40,22 +40,6 @@ services:
     networks:
       - app-network
     command: ["node", "server.js"]
-
-  # prisma-studio:
-  #   image: node:lts-alpine3.17
-  #   working_dir: /usr/src/app
-  #   volumes:
-  #     - .:/usr/src/app
-  #   command: npx prisma studio --port 5555 --browser none
-  #   ports:
-  #     - "5555:5555"
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - app-network
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
 
 volumes:
   postgres_data:
