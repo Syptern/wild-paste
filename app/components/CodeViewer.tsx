@@ -52,6 +52,7 @@ export default function CodeViewer({
           onClick={handleCopy}
           className="flex items-center gap-2 px-3 py-2 cursor-pointer transition-all"
           variant={copied ? "outline" : "default"}
+          name="copy"
         >
           {copied ? (
             <>

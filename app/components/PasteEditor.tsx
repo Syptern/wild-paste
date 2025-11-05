@@ -125,8 +125,8 @@ export default function PasteEditor() {
           className="flex items-center gap-2 cursor-pointer border rounded-md px-3 py-2 bg-white shadow-xs hover:bg-accent"
         >
           <div className="pointer-events-none flex gap-2">
-            <Checkbox name="read-once" checked={readOnce} />
-            <Label>One time read</Label>
+            <Checkbox name="read-once" id="read-once" checked={readOnce} />
+            <Label htmlFor="read-once">One time read</Label>
           </div>
         </div>
         <Button
