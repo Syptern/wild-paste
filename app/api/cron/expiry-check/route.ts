@@ -3,7 +3,21 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function POST() {
+export async function POST(request: Request) {
+  const authHeader = request.headers.get("authorization");
+  const expectedToken = process.env.CRON_SECRET;
+
+  if (!expectedToken) {
+    return NextResponse.json(
+      { error: "Server configuration error" },
+      { status: 500 }
+    );
+  }
+
+  if (authHeader !== `Bearer ${expectedToken}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     // Find all pastes that have expired but are not yet deactivated
     const expiredPastes = await prisma.paste.findMany({
