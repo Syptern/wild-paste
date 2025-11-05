@@ -41,7 +41,7 @@ export default function PasteEditor() {
     setLoading(false);
     setCreatedPaste(paste);
     window.history.pushState(null, "", "/");
-    window.history.replaceState(null, "", `/paste/${paste.id}`);
+    window.history.pushState(null, "", `/paste/${paste.id}`);
   }
 
   const createPaste = async (
@@ -72,6 +72,21 @@ export default function PasteEditor() {
 
     return json as PasteResponse;
   };
+
+  useEffect(() => {
+    const onPopState = () => {
+      // If URL is /, reset the createdPaste state
+      if (window.location.pathname === "/") {
+        setCreatedPaste(null);
+      }
+    };
+
+    window.addEventListener("popstate", onPopState);
+
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+    };
+  }, []);
 
   const handleEditorChange = ({
     code,

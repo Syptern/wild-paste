@@ -25,17 +25,25 @@ export default async function PastePage({
   } else if (paste.deactivated) {
     content = <DeactivatedText reason={paste.deactivatedReason} />;
   } else {
-    content = <><CodeViewer title={paste.title} text={paste.content} language={paste.language || undefined} /><PasteInformation paste={paste}/></>;
+    content = (
+      <>
+        <CodeViewer
+          title={paste.title}
+          text={paste.content}
+          language={paste.language || undefined}
+        />
+        <PasteInformation paste={paste} />
+      </>
+    );
   }
 
-  return (<>
-            <Header></Header>
+  return (
+    <>
+      <Header></Header>
 
-    <div className="flex items-center justify-center font-sans">
-      <main className="flex flex-col  max-w-4xl w-full">
-        {content}
-      </main>
-    </div>
+      <div className="flex items-center justify-center font-sans">
+        <main className="flex flex-col  max-w-4xl w-full">{content}</main>
+      </div>
     </>
   );
 }

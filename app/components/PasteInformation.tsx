@@ -10,7 +10,7 @@ export const PasteInformation = ({ paste }: { paste: PasteResponse }) => {
         {paste.expiresAt && (
           <div className="flex gap-2 items-center">
             <Info size="1rem" /> This paste expires at{" "}
-            {new Date(paste.expiresAt).toLocaleDateString()}{" "}
+            {new Date(paste.expiresAt).toLocaleString()}{" "}
           </div>
         )}
         {paste.readOnce && (
