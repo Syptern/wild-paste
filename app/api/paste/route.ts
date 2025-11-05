@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 export interface CreatePasteRequest {
-  title: string;
+  title: string | null;
   content: string;
   expiresAt: Date | null,
   readOnce: boolean,
@@ -15,6 +15,7 @@ export interface CreatePasteRequest {
 
 export interface PasteResponse extends Paste {
   passwordRequired: boolean,
+  passwordProtected: boolean
 }
 
 
@@ -25,12 +26,12 @@ export async function POST(request: Request) {
     
     if (!content) {
       return NextResponse.json(
-        { error: "Content is required" },
+        { error: "Paste content is required" },
         { status: 400 }
       );
     }
 
-    if (title.length > 100) {
+    if (title && title.length > 100) {
       return NextResponse.json(
         { error: "Title exceeds 100 characters" },
         { status: 400 }
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
       data: { title, content, language, password: hashedPassword, readOnce, expiresAt},
     });
     console.log(paste)
-    return NextResponse.json<PasteResponse>({...paste, passwordRequired: false, password:null});
+    return NextResponse.json<PasteResponse>({...paste, passwordRequired: false, password:null, passwordProtected: Boolean(password)});
   } catch (error) {
     console.log(error)
     return NextResponse.json(

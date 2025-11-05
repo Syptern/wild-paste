@@ -35,7 +35,7 @@ export default function ReacOnceForm({ pasteId }: ReacOnceFormProps) {
   };
 
   if (paste) {
-    return <CodeViewer text={paste.content} language={paste.language || undefined} height="250px" />;
+    return <CodeViewer title={paste.title} text={paste.content} language={paste.language || undefined} height="250px" />;
   }
 
   return (

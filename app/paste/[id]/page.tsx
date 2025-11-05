@@ -1,7 +1,9 @@
 import { PasteResponse } from "@/app/api/paste/route";
 import CodeViewer from "@/app/components/CodeViewer";
 import { DeactivatedText } from "@/app/components/DeactivatedText";
+import { Header } from "@/app/components/Header";
 import PasswordForm from "@/app/components/PasswordForm";
+import { PasteInformation } from "@/app/components/PasteInformation";
 
 import { notFound } from "next/navigation";
 
@@ -16,7 +18,6 @@ export default async function PastePage({
   );
   if (!res.ok) return notFound();
   const paste: PasteResponse = await res.json();
-  console.log(paste)
 
   let content;
   if (paste.passwordRequired) {
@@ -24,14 +25,17 @@ export default async function PastePage({
   } else if (paste.deactivated) {
     content = <DeactivatedText reason={paste.deactivatedReason} />;
   } else {
-    content = <CodeViewer text={paste.content} language={paste.language || undefined} />;
+    content = <><CodeViewer title={paste.title} text={paste.content} language={paste.language || undefined} /><PasteInformation paste={paste}/></>;
   }
 
-  return (
+  return (<>
+            <Header></Header>
+
     <div className="flex items-center justify-center font-sans">
       <main className="flex flex-col  max-w-4xl w-full">
         {content}
       </main>
     </div>
+    </>
   );
 }

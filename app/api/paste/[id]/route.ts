@@ -30,7 +30,7 @@ export async function GET(
       deactivatedReason: "read-once"
   }})
   }
-  return NextResponse.json<PasteResponse>({...paste, password: null, passwordRequired: false});
+  return NextResponse.json<PasteResponse>({...paste, password: null, passwordRequired: false, passwordProtected: false});
 }
 
 
@@ -56,5 +56,5 @@ export async function POST(
       return NextResponse.json({ error: "Invalid password" }, { status: 401 });
     }
   }
-  return NextResponse.json<PasteResponse>({...paste, password: null, passwordRequired: false});
+  return NextResponse.json<PasteResponse>({...paste, password: null, passwordRequired: false, passwordProtected: true});
 }

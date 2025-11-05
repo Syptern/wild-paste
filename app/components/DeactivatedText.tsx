@@ -16,9 +16,6 @@ export const DeactivatedText = ({ reason }: DeactivatedTextProps) => {
             text = "This paste has expired";
             // Expected output: "Mangoes and papayas are $2.79 a pound."
             break;
-        case "deleted":
-            text = "This paste has been deleted"
-            break;
         default:
             console.log(`This paste is not accessible anymore`);
     }

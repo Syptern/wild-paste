@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const languageMap: Record<string, any> = {
   "Plain Text": null,
@@ -23,19 +24,20 @@ const languageMap: Record<string, any> = {
 };
 
 interface LiveCodeEditorProps {
-  onChange?: (value: { code: string; language: string }) => void;
+  onChange?: (value: { code: string; language: string, title: string | null }) => void;
 }
 
 export default function LiveCodeEditor({ onChange }: LiveCodeEditorProps) {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("Plain Text");
+  const [title, setTitle] = useState<string | null>(null)
 
   const extension = languageMap[language] ? [languageMap[language]()] : [];
 
   // Notify parent whenever code or language changes
   useEffect(() => {
-    onChange?.({ code, language });
-  }, [code, language, onChange]);
+    onChange?.({ code, language, title });
+  }, [code, language, onChange, title]);
 
   return (
     <div className="space-y-2">
@@ -54,7 +56,13 @@ export default function LiveCodeEditor({ onChange }: LiveCodeEditorProps) {
 
       {/* CodeMirror Editor */}
       <div className="border rounded-md overflow-hidden">
+        <Input type="text" 
+        placeholder="Enter a title..." 
+        className="h-8 font-semibold pl-8 placeholder:font-normal placeholder:text-stone-400 border-b-0 ring-b-0 outline-b-0 rounded-b-none" 
+        onChange={e => setTitle(e.target.value || null)}
+        />
         <CodeMirror
+          placeholder="Start writing or pasting..."
           value={code}
           height="300px"
           extensions={extension}

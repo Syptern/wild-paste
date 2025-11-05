@@ -1,8 +1,11 @@
 import Image from "next/image";
 import PasteEditor from "./components/PasteEditor";
 import { ClipboardPaste } from "lucide-react";
+import { HomePageHeader } from "./components/HomePageHeader";
 export default function Home() {
   return (
+    <>
+    <HomePageHeader/>
     <div className="flex  items-center justify-center font-sans">
       <main className="flex flex-col  max-w-4xl w-full ">
         <div>
@@ -10,5 +13,6 @@ export default function Home() {
         </div>
       </main>
     </div>
+    </>
   );
 }

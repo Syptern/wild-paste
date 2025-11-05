@@ -5,6 +5,8 @@ import CodeViewer from "./CodeViewer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Paste } from "../generated/prisma/client";
+import { PasteInformation } from "./PasteInformation";
+import { PasteResponse } from "../api/paste/route";
 
 interface PasswordFormProps {
   pasteId: string;
@@ -12,7 +14,7 @@ interface PasswordFormProps {
 
 export default function PasswordForm({ pasteId }: PasswordFormProps) {
   const [password, setPassword] = useState("");
-  const [paste, setPaste] = useState<Paste | null>(null);
+  const [paste, setPaste] = useState<PasteResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -39,7 +41,7 @@ export default function PasswordForm({ pasteId }: PasswordFormProps) {
   };
 
   if (paste) {
-    return <CodeViewer text={paste.content} language={paste.language || undefined} height="250px" />;
+    return <><CodeViewer title={paste.title} text={paste.content} language={paste.language || undefined} height="250px" /><PasteInformation paste={paste}/></>;
   }
 
   return (
