@@ -42,7 +42,7 @@ export default function PasteEditor() {
   }
 
   const createPaste = async (
-    data: CreatePasteRequest
+    data: CreatePasteRequest,
   ): Promise<PasteResponse> => {
     const response = await fetch("/api/paste", {
       method: "POST",
@@ -53,17 +53,18 @@ export default function PasteEditor() {
     });
 
     const text = await response.text();
-    let json: any;
+    let json: object = {};
+    let error: string | undefined;
     try {
       json = text ? JSON.parse(text) : {};
     } catch {
-      json = { error: text };
+      error = text;
     }
 
     if (!response.ok) {
-      setError(json.error || "Unknown error occurred");
+      setError(error || "Unknown error occurred");
       setLoading(false);
-      throw new Error(json.error || "Unknown error occurred");
+      throw new Error(error || "Unknown error occurred");
     }
 
     return json as PasteResponse;
@@ -113,7 +114,7 @@ export default function PasteEditor() {
     <div className="flex flex-col gap-2">
       <LiveCodeEditor onChange={handleEditorChange} />
       <div className="flex flex-col sm:flex-row justify-end gap-2">
-        <ExpiryDatePicker onChange={setExpiryDate} />
+        <ExpiryDatePicker />
         <PasswordInput onChange={(v) => setPassword(v)} />
         <div
           onClick={() => setReadOnce(!readOnce)}

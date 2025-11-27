@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import { Footer } from "./components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const cormorantGaramond = Cormorant_Garamond({
+  weight: ["400", "500"],
+  variable: "--font-cormorant-garamond",
   subsets: ["latin"],
 });
 
@@ -25,20 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-stone-50 dark:bg-stone-800 flex flex-col min-h-screen`}
+        className={`${cormorantGaramond.variable} ${geistMono.variable} antialiased bg-stone-50 dark:bg-stone-800 text-stone-750 flex flex-col min-h-screen`}
       >
         <div className="px-4 flex-1">{children}</div>
-        <footer>
-          <div className="flex flex-col my-12 justify-center items-center text-stone-500 p-6">
-            <div className="w-xs border-b my-8" />
-
-            <p className="max-w-xl text-center">
-              "When you paste and share, you’re not just duplicating
-              words—you’re spreading ideas, sparking connections, and planting
-              seeds for something greater."
-            </p>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
