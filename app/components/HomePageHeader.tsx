@@ -3,7 +3,7 @@ import { MoveRight } from "lucide-react";
 import Link from "next/link";
 
 export const HomePageHeader = () => (
-  <header className="flex justify-center items-center my-12 font-sans">
+  <header className="flex justify-center items-center mb-12 mt-20 font-sans">
     <div className="flex flex-col items-center justify-center gap-10 ">
       <h1 className="text-6xl lg:text-7xl">
         {" "}
