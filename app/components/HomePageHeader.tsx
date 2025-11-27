@@ -4,12 +4,12 @@ import Link from "next/link";
 
 export const HomePageHeader = () => (
   <header className="flex justify-center items-center my-12 font-sans">
-    <div className="flex flex-col items-center justify-center gap-8 ">
-      <h1 className="text-6xl">
+    <div className="flex flex-col items-center justify-center gap-10 ">
+      <h1 className="text-6xl lg:text-7xl">
         {" "}
         Paste it. Share it. <br /> Forget it existed.{" "}
       </h1>
-      <div className="flex gap-2 items-center  [transform:scaleY(1.30)] font-medium text-2xl">
+      <div className="flex gap-2 items-center lg:mt-2  [transform:scaleY(1.30)] font-medium text-2xl">
         <span>Chaos</span>
         <MoveRight strokeWidth={1} />
         <span>Copy</span>
