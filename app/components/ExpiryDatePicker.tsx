@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CalendarIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -11,13 +11,8 @@ import { Calendar } from "@/components/ui/calendar";
 
 type ExpiryType = "never" | "5min" | "15min" | "1hour" | "1day" | "custom";
 
-interface ExpiryDatePickerProps {
-  value?: Date | null;
-  onChange: (date: Date | null) => void;
-}
-
-export function ExpiryDatePicker({ value, onChange }: ExpiryDatePickerProps) {
-  const [selectedLabel, setSelectedLabel] = useState("Set expiry time");
+export function ExpiryDatePicker() {
+  const [selectedLabel, setSelectedLabel] = useState("never");
   const [showCustomPicker, setShowCustomPicker] = useState(false);
   const [customDate, setCustomDate] = useState<Date | undefined>(undefined);
   const [open, setOpen] = useState(false);
@@ -46,20 +41,18 @@ export function ExpiryDatePicker({ value, onChange }: ExpiryDatePickerProps) {
     setShowCustomPicker(false);
     setCustomDate(date);
     setSelectedLabel(
-      "Expires at " + date?.toLocaleDateString() || "No date selected"
+      "Expires at " + date?.toLocaleDateString() || "No date selected",
     );
   };
 
   const handleOptionSelect = (option: ExpiryType, label: string) => {
     if (option === "never") {
-      onChange(null);
       setOpen(false);
       setSelectedLabel(label);
     } else {
       setSelectedLabel("Expires in " + label);
       setShowCustomPicker(false);
-      const expiryDate = calculateExpiryDate(option);
-      onChange(expiryDate);
+      setOpen(false);
     }
   };
 
@@ -69,9 +62,12 @@ export function ExpiryDatePicker({ value, onChange }: ExpiryDatePickerProps) {
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className="w-full justify-start cursor-pointer"
+            className="w-full cursor-pointer justify-start"
           >
-            {selectedLabel}
+            <div className="flex gap-2 items-center opacity-60">
+              <ChevronDown />
+              {selectedLabel.toUpperCase()}
+            </div>
           </Button>
         </PopoverTrigger>
         {!showCustomPicker ? (
@@ -81,7 +77,7 @@ export function ExpiryDatePicker({ value, onChange }: ExpiryDatePickerProps) {
               className="cursor-pointer"
               onClick={() => handleOptionSelect("never", "No Expiry Date")}
             >
-              Never
+              never
             </Button>
             <Button
               variant="outline"
@@ -117,7 +113,6 @@ export function ExpiryDatePicker({ value, onChange }: ExpiryDatePickerProps) {
               onClick={() => setShowCustomPicker(true)}
               className="cursor-pointer"
             >
-              <CalendarIcon />
               Custom
             </Button>{" "}
           </PopoverContent>
